@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Ensures proper rendering and touch zooming on mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blood Donation System</title>
+    <!-- Bootstrap CSS (v5.3) -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Optional custom spacing */
+      body {
+        padding-top: 70px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar (Mobile Responsive) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Blood Donation</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNavAltMarkup"
+        >
+          <div class="navbar-nav">
+            <a class="nav-link" href="#" id="nav-register">Register</a>
+            <a class="nav-link" href="#" id="nav-request">Request</a>
+            <a class="nav-link" href="#" id="nav-list">List Donors</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container my-4">
+      <!-- Alert Container -->
+      <div id="alert-container"></div>
+
+      <!-- Register Section -->
+      <div id="section-register">
+        <h2>Register as Donor</h2>
+        <form id="registerForm">
+          <div class="mb-3">
+            <label for="donorName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="donorName" required />
+          </div>
+          <div class="mb-3">
+            <label for="donorBloodType" class="form-label"
+              >Blood Type (A, B, AB, O)</label
+            >
+            <input type="text" class="form-control" id="donorBloodType" required />
+          </div>
+          <div class="mb-3">
+            <label for="donorAge" class="form-label">Age</label>
+            <input type="number" class="form-control" id="donorAge" required />
+          </div>
+          <div class="mb-3">
+            <label for="donorContact" class="form-label">Contact</label>
+            <input type="text" class="form-control" id="donorContact" required />
+          </div>
+          <div class="mb-3">
+            <label for="donorLocation" class="form-label">Location</label>
+            <input type="text" class="form-control" id="donorLocation" required />
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+      </div>
+
+      <!-- Request Section -->
+      <div id="section-request" class="d-none">
+        <h2>Request Blood Donation</h2>
+        <form id="requestForm">
+          <div class="mb-3">
+            <label for="requiredBloodType" class="form-label"
+              >Required Blood Type</label
+            >
+            <input type="text" class="form-control" id="requiredBloodType" required />
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Search</button>
+        </form>
+        <div id="requestResults" class="mt-4"></div>
+      </div>
+
+      <!-- List Section -->
+      <div id="section-list" class="d-none">
+        <h2>List of Registered Donors</h2>
+        <div id="donorList"></div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      // Define a key for localStorage
+      const STORAGE_KEY = "bloodDonors";
+
+      // Retrieve donors from localStorage
+      function getDonors() {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      }
+
+      // Save donors to localStorage
+      function saveDonors(donors) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(donors));
+      }
+
+      // Show an alert message
+      function showAlert(message, type) {
+        const alertContainer = document.getElementById("alert-container");
+        alertContainer.innerHTML = `
+          <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        `;
+      }
+
+      // Handle registration form submission
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const name = document.getElementById("donorName").value;
+          let bloodType = document.getElementById("donorBloodType").value.trim().toUpperCase();
+          const age = document.getElementById("donorAge").value;
+          const contact = document.getElementById("donorContact").value;
+          const location = document.getElementById("donorLocation").value;
+          // Validate blood type
+          const validTypes = ["A", "B", "AB", "O"];
+          if (!validTypes.includes(bloodType)) {
+            showAlert(
+              "Please enter a valid blood type: A, B, AB, or O.",
+              "danger"
+            );
+            return;
+          }
+          // Create donor object
+          const donor = { name, blood_type: bloodType, age, contact, location };
+          const donors = getDonors();
+          donors.push(donor);
+          saveDonors(donors);
+          showAlert("Donor registered successfully!", "success");
+          this.reset();
+        });
+
+      // Handle donation request form submission
+      document
+        .getElementById("requestForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const requiredType = document
+            .getElementById("requiredBloodType")
+            .value.trim()
+            .toUpperCase();
+          const validTypes = ["A", "B", "AB", "O"];
+          if (!validTypes.includes(requiredType)) {
+            showAlert(
+              "Please enter a valid blood type: A, B, AB, or O.",
+              "danger"
+            );
+            return;
+          }
+          const donors = getDonors().filter(
+            (d) => d.blood_type === requiredType
+          );
+          const resultsDiv = document.getElementById("requestResults");
+          resultsDiv.innerHTML = "";
+          if (donors.length > 0) {
+            let html = '<ul class="list-group">';
+            donors.forEach((donor) => {
+              html += `<li class="list-group-item">
+                <strong>${donor.name}</strong> (Contact: ${donor.contact}, Location: ${donor.location})
+              </li>`;
+            });
+            html += "</ul>";
+            resultsDiv.innerHTML = html;
+          } else {
+            resultsDiv.innerHTML = `<p>No donors found with blood type ${requiredType}.</p>`;
+          }
+        });
+
+      // Render full list of donors
+      function renderDonorList() {
+        const donorListDiv = document.getElementById("donorList");
+        const donors = getDonors();
+        if (donors.length === 0) {
+          donorListDiv.innerHTML = "<p>No donors registered yet.</p>";
+          return;
+        }
+        let html = '<ul class="list-group">';
+        donors.forEach((donor) => {
+          html += `<li class="list-group-item">
+            ${donor.name} - Blood Type: ${donor.blood_type}, Age: ${donor.age}, Contact: ${donor.contact}, Location: ${donor.location}
+          </li>`;
+        });
+        html += "</ul>";
+        donorListDiv.innerHTML = html;
+      }
+
+      // Navigation handling
+      document.getElementById("nav-register").addEventListener("click", function (e) {
+        e.preventDefault();
+        showSection("section-register");
+      });
+      document.getElementById("nav-request").addEventListener("click", function (e) {
+        e.preventDefault();
+        showSection("section-request");
+      });
+      document.getElementById("nav-list").addEventListener("click", function (e) {
+        e.preventDefault();
+        renderDonorList();
+        showSection("section-list");
+      });
+
+      // Helper: Show a specific section and hide others
+      function showSection(sectionId) {
+        document.getElementById("section-register").classList.add("d-none");
+        document.getElementById("section-request").classList.add("d-none");
+        document.getElementById("section-list").classList.add("d-none");
+        document.getElementById(sectionId).classList.remove("d-none");
+      }
+    </script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    ></script>
+  </body>
+</html>
