@@ -1,0 +1,27 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(to right, #ff4b5c, #ff7b82);
+    color: white;
+    padding: 60px 0;
+}
+
+.hero-section h1, .hero-section h2 {
+    font-weight: bold;
+}
+
+/* Statistics */
+.stats {
+    background: #f8f9fa;
+}
+
+.stat-box {
+    border-radius: 10px;
+}
+
+.bg-purple {
+    background-color: #6f42c1;
+}
