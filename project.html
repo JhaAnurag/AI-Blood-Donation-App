@@ -23,12 +23,13 @@
                     <li class="nav-item"><a class="nav-link" href="#">Want to Donate</a></li>
                     <li class="nav-item"><a class="nav-link btn btn-danger text-white" href="#">Login</a></li>
                 </ul>
+                <button id="darkModeToggle" class="btn btn-dark ms-3">Dark Mode</button>
             </div>
         </div>
     </nav>
-
+    
     <!-- Hero Section -->
-    <header class="hero-section text-center">
+    <header class="hero-section text-center py-5">
         <div class="container">
             <h1>Give the Gift of Life</h1>
             <h2 class="text-danger">Donate Blood Today!</h2>
@@ -43,18 +44,74 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="stat-box bg-primary text-white p-4">
-                        <h3 id="donorsCount">7097432</h3>
+                        <h3 id="donorsCount">7,097,432</h3>
                         <p>Donors Registered</p>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="stat-box bg-purple text-white p-4">
-                        <h3 id="bloodUnits">7819280</h3>
+                    <div class="stat-box bg-secondary text-white p-4">
+                        <h3 id="bloodUnits">7,819,280</h3>
                         <p>Blood Units Collected</p>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- Blood Banks Section -->
+    <section id="bloodBanks" class="container py-5">
+        <h2 class="text-center text-danger">Blood Banks</h2>
+        <input type="text" id="searchBloodBank" class="form-control" placeholder="Search by Name or Location">
+        <table id="bloodBankTable" class="table table-striped mt-4">
+            <thead class="table-dark">
+                <tr><th>Name</th><th>Location</th><th>Contact</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Red Cross Blood Bank</td><td>Delhi</td><td>+91 9876543210</td></tr>
+                <tr><td>Apollo Blood Bank</td><td>Mumbai</td><td>+91 9988776655</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Eligibility Check -->
+    <section class="container py-5">
+        <h2 class="text-center text-danger">Check Your Eligibility</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <input type="number" id="eligibilityAge" class="form-control" placeholder="Enter Age" required>
+            </div>
+            <div class="col-md-4">
+                <input type="number" id="eligibilityWeight" class="form-control" placeholder="Enter Weight (kg)" required>
+            </div>
+            <div class="col-md-4">
+                <button id="checkEligibility" class="btn btn-danger w-100">Check</button>
+            </div>
+        </div>
+        <p id="eligibilityResult" class="text-center mt-3"></p>
+    </section>
+
+    <!-- Donor Registration -->
+    <section id="donorRegistration" class="container py-5">
+        <h2 class="text-center text-danger">Become a Blood Donor</h2>
+        <form id="donorForm">
+            <div class="mb-3">
+                <input type="text" id="fullName" class="form-control" placeholder="Full Name" required>
+            </div>
+            <div class="mb-3">
+                <input type="number" id="age" class="form-control" placeholder="Age" required>
+            </div>
+            <div class="mb-3">
+                <select id="bloodGroup" class="form-control" required>
+                    <option value="">Select Blood Group</option>
+                    <option>A+</option><option>A-</option>
+                    <option>B+</option><option>B-</option>
+                    <option>O+</option><option>O-</option>
+                    <option>AB+</option><option>AB-</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-danger w-100">Register</button>
+            <p id="successMessage" class="text-success mt-3" style="display: none;"></p>
+        </form>
     </section>
 
     <script src="project.js"></script>
