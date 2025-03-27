@@ -25,3 +25,38 @@ body {
 .bg-purple {
     background-color: #6f42c1;
 }
+
+/* 🌙 Dark Mode Styles */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Table */
+.dark-mode .table {
+    background-color: #333;
+    color: white;
+}
+
+/* Navbar */
+.dark-mode .navbar {
+    background-color: #222 !important;
+}
+
+.dark-mode .navbar-light .navbar-brand,
+.dark-mode .navbar-light .navbar-nav .nav-link {
+    color: white !important;
+}
+
+/* Buttons */
+.dark-mode .btn-danger {
+    background-color: #ff4b5c;
+}
+
+/* Input Fields */
+.dark-mode input, 
+.dark-mode select {
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+}
