@@ -2,20 +2,61 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* Hero Section */
-.hero-section {
-    background: linear-gradient(to right, #ff4b5c, #ff7b82);
+/* Slideshow */
+.carousel {
+    max-height: 450px; /* Set a reasonable height */
+    overflow: hidden;
+}
+
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 450px; /* Uniform height */
+    object-fit: cover; /* Ensures the image is properly cropped */
+    border-radius: 10px; /* Adds a slight rounded border */
+    filter: brightness(95%); /* Slight brightness for clarity */
+}
+
+
+/* Dark Mode */
+.dark-mode {
+    background-color: #121212;
     color: white;
-    padding: 60px 0;
 }
 
-.hero-section h1, .hero-section h2 {
-    font-weight: bold;
+.dark-mode .table {
+    background-color: #333;
+    color: white;
 }
 
+.dark-mode .navbar {
+    background-color: #222 !important;
+    color: white !important;
+}
+
+.dark-mode .btn-danger {
+    background-color: #ff4b5c;
+    color: white !important;
+}
+.dark-mode .btn-danger:hover {
+    background-color: #ff1f3d;
+    color: white !important;
+}
+.dark-mode .btn-primary {
+    background-color: #007bff;
+    color: white !important;
+}
 /* Statistics */
 .stats {
     background: #f8f9fa;
+}
+html {
+    scroll-behavior: smooth;
 }
 
 .stat-box {
