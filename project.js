@@ -1,5 +1,30 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById("darkModeToggle");
+    const body = document.body;
+
+    if (localStorage.getItem("dark-mode") === "enabled") {
+        body.classList.add("dark-mode");
+        darkModeToggle.textContent = "Light Mode";
+    }
+
+    darkModeToggle.addEventListener("click", function () {
+        body.classList.toggle("dark-mode");
+        localStorage.setItem("dark-mode", body.classList.contains("dark-mode") ? "enabled" : "disabled");
+        darkModeToggle.textContent = body.classList.contains("dark-mode") ? "Light Mode" : "Dark Mode";
+    });
+
+    // Auto Slide Carousel
+    new bootstrap.Carousel(document.getElementById('carouselExampleIndicators'), {
+        interval: 3000,
+        wrap: true
+    });
+
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+
     // 🔍 Live Search in Blood Bank List
     document.getElementById("searchBloodBank").addEventListener("input", function () {
         let filter = this.value.toLowerCase();
@@ -75,3 +100,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
