@@ -1,242 +1,235 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <!-- Ensures proper rendering and touch zooming on mobile -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Blood Donation System</title>
-    <!-- Bootstrap CSS (v5.3) -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      /* Optional custom spacing */
-      body {
-        padding-top: 70px;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Navigation Bar (Mobile Responsive) -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">Blood Donation</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarNavAltMarkup"
-        >
-          <div class="navbar-nav">
-            <a class="nav-link" href="#" id="nav-register">Register</a>
-            <a class="nav-link" href="#" id="nav-request">Request</a>
-            <a class="nav-link" href="#" id="nav-list">List Donors</a>
-          </div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Rakt Kosh - Donate Blood</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Blood Donation</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#bloodBanks">Find Blood</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#donorRegistration">Donate</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-danger text-white" href="#">Login</a></li>
+                </ul>
+                <button id="darkModeToggle" class="btn btn-dark ms-3">Dark Mode</button>
+            </div>
         </div>
-      </div>
     </nav>
 
-    <!-- Main Container -->
-    <div class="container my-4">
-      <!-- Alert Container -->
-      <div id="alert-container"></div>
-
-      <!-- Register Section -->
-      <div id="section-register">
-        <h2>Register as Donor</h2>
-        <form id="registerForm">
-          <div class="mb-3">
-            <label for="donorName" class="form-label">Name</label>
-            <input type="text" class="form-control" id="donorName" required />
-          </div>
-          <div class="mb-3">
-            <label for="donorBloodType" class="form-label"
-              >Blood Type (A, B, AB, O)</label
-            >
-            <input type="text" class="form-control" id="donorBloodType" required />
-          </div>
-          <div class="mb-3">
-            <label for="donorAge" class="form-label">Age</label>
-            <input type="number" class="form-control" id="donorAge" required />
-          </div>
-          <div class="mb-3">
-            <label for="donorContact" class="form-label">Contact</label>
-            <input type="text" class="form-control" id="donorContact" required />
-          </div>
-          <div class="mb-3">
-            <label for="donorLocation" class="form-label">Location</label>
-            <input type="text" class="form-control" id="donorLocation" required />
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Register</button>
-        </form>
-      </div>
-
-      <!-- Request Section -->
-      <div id="section-request" class="d-none">
-        <h2>Request Blood Donation</h2>
-        <form id="requestForm">
-          <div class="mb-3">
-            <label for="requiredBloodType" class="form-label"
-              >Required Blood Type</label
-            >
-            <input type="text" class="form-control" id="requiredBloodType" required />
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Search</button>
-        </form>
-        <div id="requestResults" class="mt-4"></div>
-      </div>
-
-      <!-- List Section -->
-      <div id="section-list" class="d-none">
-        <h2>List of Registered Donors</h2>
-        <div id="donorList"></div>
-      </div>
+    <!-- Auto-Slideshow -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="blood2.jpg" class="d-block w-100" alt="Blood Donation Benefit 1">
+            </div>
+            <div class="carousel-item">
+                <img src="download.jpg" class="d-block w-100" alt="Blood Donation Benefit 2">
+            </div>
+            <div class="carousel-item">
+                <img src="blood3.jpg" class="d-block w-100" alt="Blood Donation Benefit 3">
+            </div>
+        </div>
     </div>
+    <!-- stats -->
+    <section class="stats text-center py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="stat-box bg-primary text-white p-4">
+                        <h3 id="donorsCount">7,097,432</h3>
+                        <p>Donors Registered</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="stat-box bg-secondary text-white p-4">
+                        <h3 id="bloodUnits">7,819,280</h3>
+                        <p>Blood Units Collected</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blood Donor List -->
+    <section class="container py-5">
+        <h2 class="text-center text-danger">Donor List</h2>
+        <table id="donorTable" class="table table-striped mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Blood Group</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ravi Kumar</td>
+                    <td>A+</td>
+                    <td>Delhi</td>
+                </tr>
+                <tr>
+                    <td>Neha Singh</td>
+                    <td>B-</td>
+                    <td>Mumbai</td>
+                </tr>
+                <tr>
+                    <td>Amit Sharma</td>
+                    <td>O+</td>
+                    <td>Kolkata</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <!-- Blood Banks Section -->
+    <section id="bloodBanks" class="container py-5">
+        <h2 class="text-center text-danger">Blood Banks</h2>
+        <input type="text" id="searchBloodBank" class="form-control" placeholder="Search by Name or Location">
+        <table id="bloodBankTable" class="table table-striped mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Red Cross Blood Bank</td>
+                    <td>Delhi</td>
+                    <td>+91 9876543210</td>
+                </tr>
+                <tr>
+                    <td>Apollo Blood Bank</td>
+                    <td>Mumbai</td>
+                    <td>+91 9988776655</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <!-- Find Blood Donation Centers -->
+    <section class="container py-5">
+        <h2 class="text-center text-primary">Available Blood Donation Centers</h2>
+        <table class="table table-bordered mt-4">
+            <thead class="table-secondary">
+                <tr>
+                    <th>City</th>
+                    <th>Center Name</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Delhi</td>
+                    <td>AIIMS Blood Bank</td>
+                    <td>Safdarjung, Delhi</td>
+                </tr>
+                <tr>
+                    <td>Mumbai</td>
+                    <td>Tata Memorial Blood Bank</td>
+                    <td>Parel, Mumbai</td>
+                </tr>
+                <tr>
+                    <td>Bangalore</td>
+                    <td>St. John's Blood Bank</td>
+                    <td>Koramangala, Bangalore</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Eligibility Check -->
+    <section class="container py-5">
+        <h2 class="text-center text-danger">Check Your Eligibility</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <input type="number" id="eligibilityAge" class="form-control" placeholder="Enter Age" required>
+            </div>
+            <div class="col-md-4">
+                <input type="number" id="eligibilityWeight" class="form-control" placeholder="Enter Weight (kg)"
+                    required>
+            </div>
+            <div class="col-md-4">
+                <button id="checkEligibility" class="btn btn-danger w-100">Check</button>
+            </div>
+        </div>
+        <p id="eligibilityResult" class="text-center mt-3"></p>
+    </section>
+    <!-- Blood Donation Camps Schedule -->
+    <section class="container py-5">
+        <h2 class="text-center text-success">Upcoming Blood Donation Camps</h2>
+        <table class="table table-striped mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Organizer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>April 5, 2025</td>
+                    <td>Delhi</td>
+                    <td>Red Cross Society</td>
+                </tr>
+                <tr>
+                    <td>April 10, 2025</td>
+                    <td>Mumbai</td>
+                    <td>Lions Club</td>
+                </tr>
+                <tr>
+                    <td>April 15, 2025</td>
+                    <td>Bangalore</td>
+                    <td>Rotary Club</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <!-- Donor Registration -->
+    <section id="donorRegistration" class="container py-5">
+        <h2 class="text-center text-danger">Become a Blood Donor</h2>
+        <form id="donorForm">
+            <div class="mb-3">
+                <input type="text" id="fullName" class="form-control" placeholder="Full Name" required>
+            </div>
+            <div class="mb-3">
+                <input type="number" id="age" class="form-control" placeholder="Age" required>
+            </div>
+            <div class="mb-3">
+                <select id="bloodGroup" class="form-control" required>
+                    <option value="">Select Blood Group</option>
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-danger w-100">Register</button>
+            <p id="successMessage" class="text-success mt-3" style="display: none;"></p>
+        </form>
+    </section>
 
     <!-- JavaScript -->
-    <script>
-      // Define a key for localStorage
-      const STORAGE_KEY = "bloodDonors";
+   
+    
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
 
-      // Retrieve donors from localStorage
-      function getDonors() {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-      }
-
-      // Save donors to localStorage
-      function saveDonors(donors) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(donors));
-      }
-
-      // Show an alert message
-      function showAlert(message, type) {
-        const alertContainer = document.getElementById("alert-container");
-        alertContainer.innerHTML = `
-          <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        `;
-      }
-
-      // Handle registration form submission
-      document
-        .getElementById("registerForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const name = document.getElementById("donorName").value;
-          let bloodType = document.getElementById("donorBloodType").value.trim().toUpperCase();
-          const age = document.getElementById("donorAge").value;
-          const contact = document.getElementById("donorContact").value;
-          const location = document.getElementById("donorLocation").value;
-          // Validate blood type
-          const validTypes = ["A", "B", "AB", "O"];
-          if (!validTypes.includes(bloodType)) {
-            showAlert(
-              "Please enter a valid blood type: A, B, AB, or O.",
-              "danger"
-            );
-            return;
-          }
-          // Create donor object
-          const donor = { name, blood_type: bloodType, age, contact, location };
-          const donors = getDonors();
-          donors.push(donor);
-          saveDonors(donors);
-          showAlert("Donor registered successfully!", "success");
-          this.reset();
-        });
-
-      // Handle donation request form submission
-      document
-        .getElementById("requestForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const requiredType = document
-            .getElementById("requiredBloodType")
-            .value.trim()
-            .toUpperCase();
-          const validTypes = ["A", "B", "AB", "O"];
-          if (!validTypes.includes(requiredType)) {
-            showAlert(
-              "Please enter a valid blood type: A, B, AB, or O.",
-              "danger"
-            );
-            return;
-          }
-          const donors = getDonors().filter(
-            (d) => d.blood_type === requiredType
-          );
-          const resultsDiv = document.getElementById("requestResults");
-          resultsDiv.innerHTML = "";
-          if (donors.length > 0) {
-            let html = '<ul class="list-group">';
-            donors.forEach((donor) => {
-              html += `<li class="list-group-item">
-                <strong>${donor.name}</strong> (Contact: ${donor.contact}, Location: ${donor.location})
-              </li>`;
-            });
-            html += "</ul>";
-            resultsDiv.innerHTML = html;
-          } else {
-            resultsDiv.innerHTML = `<p>No donors found with blood type ${requiredType}.</p>`;
-          }
-        });
-
-      // Render full list of donors
-      function renderDonorList() {
-        const donorListDiv = document.getElementById("donorList");
-        const donors = getDonors();
-        if (donors.length === 0) {
-          donorListDiv.innerHTML = "<p>No donors registered yet.</p>";
-          return;
-        }
-        let html = '<ul class="list-group">';
-        donors.forEach((donor) => {
-          html += `<li class="list-group-item">
-            ${donor.name} - Blood Type: ${donor.blood_type}, Age: ${donor.age}, Contact: ${donor.contact}, Location: ${donor.location}
-          </li>`;
-        });
-        html += "</ul>";
-        donorListDiv.innerHTML = html;
-      }
-
-      // Navigation handling
-      document.getElementById("nav-register").addEventListener("click", function (e) {
-        e.preventDefault();
-        showSection("section-register");
-      });
-      document.getElementById("nav-request").addEventListener("click", function (e) {
-        e.preventDefault();
-        showSection("section-request");
-      });
-      document.getElementById("nav-list").addEventListener("click", function (e) {
-        e.preventDefault();
-        renderDonorList();
-        showSection("section-list");
-      });
-
-      // Helper: Show a specific section and hide others
-      function showSection(sectionId) {
-        document.getElementById("section-register").classList.add("d-none");
-        document.getElementById("section-request").classList.add("d-none");
-        document.getElementById("section-list").classList.add("d-none");
-        document.getElementById(sectionId).classList.remove("d-none");
-      }
-    </script>
-    <!-- Bootstrap Bundle with Popper -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-    ></script>
-  </body>
 </html>
